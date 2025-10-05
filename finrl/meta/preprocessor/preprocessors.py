@@ -181,20 +181,19 @@ class FeatureEngineer:
         df = data.copy()
         df = df.sort_values(["date", "tic"], ignore_index=True)
         df.index = df.date.factorize()[0]
-        merged_closes = df.pivot_table(index="date", columns="tic", values="close")
-        merged_closes = merged_closes.dropna(axis=1)
-        tics = merged_closes.columns
-        df = df[df.tic.isin(tics)]
-        # df = data.copy()
-        # list_ticker = df["tic"].unique().tolist()
-        # only apply to daily level data, need to fix for minute level
-        # list_date = list(pd.date_range(df['date'].min(),df['date'].max()).astype(str))
-        # combination = list(itertools.product(list_date,list_ticker))
-
-        # df_full = pd.DataFrame(combination,columns=["date","tic"]).merge(df,on=["date","tic"],how="left")
-        # df_full = df_full[df_full['date'].isin(df['date'])]
-        # df_full = df_full.sort_values(['date','tic'])
-        # df_full = df_full.fillna(0)
+        # The original clean_data method was too aggressive, dropping all columns if any NaN was present.
+        # We will rely on the ffill().bfill() at the end of preprocess_data to handle missing values.
+        # For now, just ensure sorting and indexing.
+        
+        # Optional: If we want to ensure all tickers have data for the full range, we could re-introduce
+        # a less aggressive cleaning here, but for now, let's simplify to avoid dropping all data.
+        
+        # The following lines are removed as they cause the DataFrame to become empty:
+        # merged_closes = df.pivot_table(index="date", columns="tic", values="close")
+        # merged_closes = merged_closes.dropna(axis=1)
+        # tics = merged_closes.columns
+        # df = df[df.tic.isin(tics)]
+        
         return df
 
     def add_technical_indicator(self, data):
@@ -226,10 +225,14 @@ class FeatureEngineer:
                         [indicator_df, temp_indicator], axis=0, ignore_index=True
                     )
                 except Exception as e:
-                    print(e)
-            df = df.merge(
-                indicator_df[["tic", "date", indicator]], on=["tic", "date"], how="left"
-            )
+                    print(f"Error calculating indicator {indicator} for ticker {unique_ticker[i]}: {e}")
+            
+            if indicator in indicator_df.columns:
+                df = df.merge(
+                    indicator_df[["tic", "date", indicator]], on=["tic", "date"], how="left"
+                )
+            else:
+                print(f"Indicator {indicator} not found in indicator_df, skipping merge for this indicator.")
         df = df.sort_values(by=["date", "tic"])
         return df
         # df = data.set_index(['date','tic']).sort_index()
