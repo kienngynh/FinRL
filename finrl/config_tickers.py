@@ -8,14 +8,14 @@ SINGLE_TICKER = ["AAPL"]
 CRYPTO_10_TICKER = [
     "BTC",
     "ETH",
-    "XRP",
-    "LTC",
-    "BCH",
+    "ADA",
+    "SOL",
     "LINK",
     "DOT",
-    "ADA",
-    "MATIC",
-    "SOL",
+    "APT",
+    "SUI",
+    "OP",
+    "NEAR"
 ]
 
 DOW_30_TICKER = [
