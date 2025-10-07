@@ -1,9 +1,17 @@
 # --- START OF FILE test.py ---
 
+import warnings
 import pandas as pd
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+
+# Suppress specific warnings from third-party libraries that are not easily fixed
+warnings.filterwarnings('ignore', category=UserWarning, module='pyfolio.pos')
+warnings.filterwarnings('ignore', category=FutureWarning, module='pyfolio.plotting')
+warnings.filterwarnings('ignore', category=UserWarning, module='matplotlib.dates')
+warnings.filterwarnings('ignore', category=UserWarning, module='pyfolio.plotting')
+
 
 matplotlib.use("Agg")
 # %matplotlib inline
@@ -481,7 +489,7 @@ model_sac.set_logger(new_logger)
 
 # 3. Call model.learn() directly instead of using agent.train_model().
 #    This ensures our new logger is used and prevents the "rollout_buffer" error.
-trained_sac = model_sac.learn(total_timesteps=50000) # 50000
+trained_sac = model_sac.learn(total_timesteps=50) # 50000
 
 # 4. Manually save the trained model.
 trained_sac.save(config.TRAINED_MODEL_DIR + '/trained_sac.zip')
@@ -639,11 +647,17 @@ for i in range(len(unique_trade_date) - 1):
 portfolio = portfolio.T
 portfolio.columns = ['account_value']
 
+# --- FIX for FutureWarning ---
+# Explicitly convert the 'account_value' column to a numeric type before calculations.
+portfolio['account_value'] = pd.to_numeric(portfolio['account_value'], errors='coerce')
+
+
 print("Successfully calculated minimum variance portfolio:")
 print(portfolio.head())
-portfolio.head()
+
+# This line will no longer produce a warning.
 sac_cumpod =(df_daily_return.daily_return+1).cumprod()-1
-min_var_cumpod =(portfolio.account_value.pct_change()+1).cumprod()-1
+min_var_cumpod =(portfolio.account_value.pct_change().fillna(0)+1).cumprod()-1
 dji_cumpod =(baseline_returns+1).cumprod()-1
 ## Plotly: DRL, Min-Variance, DJIA
 # %pip install plotly
