@@ -32,7 +32,6 @@ from copy import deepcopy # Needed for plot functions
 from pyfolio import timeseries # Needed for plot functions
 import matplotlib.dates as mdates # Needed for plot functions
 from typing import Type
-import yfinance as yf
 
 # ==============================================================================
 # Suppress Warnings
@@ -84,10 +83,10 @@ DIRECTORIES = [DATA_SAVE_DIR, TRAINED_MODEL_DIR, TENSORBOARD_LOG_DIR, RESULTS_DI
 
 # --- Data Config ---
 TICKER_LIST = CRYPTO_10_TICKER_FINRL
-TRAIN_START_DATE = "2018-04-30"
-TRAIN_END_DATE = "2021-03-11"
-TRADE_START_DATE = "2021-03-12"
-TRADE_END_DATE = "2025-03-12"
+TRAIN_START_DATE = "2012-01-01"
+TRAIN_END_DATE = "2023-01-01"
+TRADE_START_DATE = "2023-01-01"
+TRADE_END_DATE = "2025-10-01"
 BASELINE_TICKER = "BTC"
 
 # --- Model Config ---
@@ -95,12 +94,12 @@ SAC_PARAMS = {
     "batch_size": 128,
     "buffer_size": 100000,
     "learning_rate": 0.0003,
-    "learning_starts": 100,
+    "learning_starts": 1000,
     "ent_coef": "auto_0.1",
 }
+MODEL_LEARN_TOTALTIMESTEPS = 50000
 TRAINED_MODEL_PATH = os.path.join(TRAINED_MODEL_DIR, 'trained_sac.zip')
 
-# A2C_PARAMS and other model parameters from finrl/config.py
 A2C_PARAMS = {"n_steps": 5, "ent_coef": 0.01, "learning_rate": 0.0007}
 PPO_PARAMS = {
     "n_steps": 2048,
@@ -122,116 +121,6 @@ def setup_directories(dirs):
         if not os.path.exists(d):
             os.makedirs(d)
 
-class YahooDownloader:
-    """Provides methods for retrieving daily stock data from
-    Yahoo Finance API
-
-    Attributes
-    ----------
-        start_date : str
-            start date of the data (modified from neofinrl_config.py)
-        end_date : str
-            end date of the data (modified from neofinrl_config.py)
-        ticker_list : list
-            a list of stock tickers (modified from neofinrl_config.py)
-
-    Methods
-    -------
-    fetch_data()
-        Fetches data from yahoo API
-
-    """
-
-    def __init__(self, start_date: str, end_date: str, ticker_list: list):
-        self.start_date = start_date
-        self.end_date = end_date
-        self.ticker_list = ticker_list
-
-    def fetch_data(self, proxy=None, auto_adjust=False) -> pd.DataFrame:
-        """Fetches data from Yahoo API
-        Parameters
-        ----------
-
-        Returns
-        -------
-        `pd.DataFrame`
-            7 columns: A date, open, high, low, close, volume and tick symbol
-            for the specified stock ticker
-        """
-        # Download and save the data in a pandas DataFrame:
-        data_df = pd.DataFrame()
-        num_failures = 0
-        for tic in self.ticker_list:
-            temp_df = yf.download(
-                tic,
-                start=self.start_date,
-                end=self.end_date,
-                proxy=proxy,
-                auto_adjust=auto_adjust,
-            )
-            if temp_df.columns.nlevels != 1:
-                temp_df.columns = temp_df.columns.droplevel(1)
-            temp_df["tic"] = tic
-            if len(temp_df) > 0:
-                data_df = pd.concat([data_df, temp_df], axis=0)
-            else:
-                num_failures += 1
-        if num_failures == len(self.ticker_list):
-            raise ValueError("no data is fetched.")
-        # reset the index, we want to use numbers as index instead of dates
-        data_df = data_df.reset_index()
-        try:
-            # convert the column names to standardized names
-            data_df.rename(
-                columns={
-                    "Date": "date",
-                    "Adj Close": "adjcp",
-                    "Close": "close",
-                    "High": "high",
-                    "Low": "low",
-                    "Volume": "volume",
-                    "Open": "open",
-                    "tic": "tic",
-                },
-                inplace=True,
-            )
-
-            if not auto_adjust:
-                data_df = self._adjust_prices(data_df)
-        except NotImplementedError:
-            print("the features are not supported currently")
-        # create day of the week column (monday = 0)
-        data_df["day"] = data_df["date"].dt.dayofweek
-        # convert date to standard string format, easy to filter
-        data_df["date"] = data_df.date.apply(lambda x: x.strftime("%Y-%m-%d"))
-        # drop missing data
-        data_df = data_df.dropna()
-        data_df = data_df.reset_index(drop=True)
-        print("Shape of DataFrame: ", data_df.shape)
-
-        data_df = data_df.sort_values(by=["date", "tic"]).reset_index(drop=True)
-
-        return data_df
-
-    def _adjust_prices(self, data_df: pd.DataFrame) -> pd.DataFrame:
-        # use adjusted close price instead of close price
-        data_df["adj"] = data_df["adjcp"] / data_df["close"]
-        for col in ["open", "high", "low", "close"]:
-            data_df[col] *= data_df["adj"]
-
-        # drop the adjusted close price column
-        return data_df.drop(["adjcp", "adj"], axis=1)
-
-    def select_equal_rows_stock(self, df):
-        df_check = df.tic.value_counts()
-        df_check = pd.DataFrame(df_check).reset_index()
-        df_check.columns = ["tic", "counts"]
-        mean_df = df_check.counts.mean()
-        equal_list = list(df.tic.value_counts() >= mean_df)
-        names = df.tic.value_counts().index
-        select_stocks_list = list(names[equal_list])
-        df = df[df.tic.isin(select_stocks_list)]
-        return df
 
 def data_split(df, start, end, target_date_col="date"):
     """
@@ -902,10 +791,6 @@ def convert_daily_return_to_pyfolio_ts(df):
     return pd.Series(strategy_ret["daily_return"].values, index=strategy_ret.index)
 
 
-def FinRLGetBaseline(ticker, start, end):
-    return YahooDownloader(
-        start_date=start, end_date=end, ticker_list=[ticker]
-    ).fetch_data()
 
 
 def load_keltner_params(ticker: str, strategies_dir: str = "./portfolio/strategies/") -> dict:
@@ -1582,7 +1467,7 @@ def train_agent(train_df, env_kwargs, model_params, model_save_path):
     new_logger = configure(log_path, ["stdout", "tensorboard"])
     model.set_logger(new_logger)
     
-    trained_model = model.learn(total_timesteps=5000) # Increased timesteps for better learning
+    trained_model = model.learn(total_timesteps=MODEL_LEARN_TOTALTIMESTEPS)
     trained_model.save(model_save_path)
     return trained_model
 
@@ -1691,7 +1576,7 @@ def main():
 
     env_kwargs = {
         "hmax": 100,
-        "initial_amount": 1000000,
+        "initial_amount": 1000,
         "transaction_cost_pct": 0.001,
         "state_space": state_space,
         "stock_dim": stock_dimension,
@@ -1714,9 +1599,9 @@ def main():
     new_logger = configure(log_path, ["stdout", "tensorboard"])
     model.set_logger(new_logger)
     
-    trained_model = model.learn(total_timesteps=5000) # Increased timesteps for better learning
-    trained_model.save(TRAINED_MODEL_PATH)
-    # train_agent(train_df, env_kwargs, SAC_PARAMS, TRAINED_MODEL_PATH) # Original call
+    # trained_model = model.learn(total_timesteps=MODEL_LEARN_TOTALTIMESTEPS) # Increased timesteps for better learning
+    # trained_model.save(TRAINED_MODEL_PATH)
+    train_agent(train_df, env_kwargs, SAC_PARAMS, TRAINED_MODEL_PATH) # Original call
     print("--- Agent Training Finished ---")
 
     print("--- Starting Backtesting ---")
@@ -1728,7 +1613,8 @@ def main():
     print("--- Analyzing Performance ---")
     drl_strat_returns = convert_daily_return_to_pyfolio_ts(drl_daily_return)
 
-    baseline_df = FinRLGetBaseline(ticker=BASELINE_TICKER, start=TRADE_START_DATE, end=TRADE_END_DATE) # Changed to FinRLGetBaseline
+    baseline_downloader = CCXTDownloader(start_date=TRADE_START_DATE, end_date=TRADE_END_DATE)
+    baseline_df = baseline_downloader.get_data(ticker_list=[BASELINE_TICKER])
     baseline_returns = get_daily_return(baseline_df, value_col_name="close")
     if baseline_returns.index.tz is None:
         baseline_returns = baseline_returns.tz_localize('UTC')
