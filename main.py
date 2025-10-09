@@ -97,7 +97,7 @@ SAC_PARAMS = {
     "learning_starts": 1000,
     "ent_coef": "auto_0.1",
 }
-MODEL_LEARN_TOTALTIMESTEPS = 50000
+MODEL_LEARN_TOTALTIMESTEPS = 10000
 TRAINED_MODEL_PATH = os.path.join(TRAINED_MODEL_DIR, 'trained_sac.zip')
 
 A2C_PARAMS = {"n_steps": 5, "ent_coef": 0.01, "learning_rate": 0.0007}
