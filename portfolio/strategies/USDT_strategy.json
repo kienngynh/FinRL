@@ -1,0 +1,19 @@
+{
+    "position_buy_kc_window": 0,
+    "position_buy_kc_atr": 0,
+    "position_buy_kc_mult": 0.0,
+    "position_sell_kc_window": 0,
+    "position_sell_kc_atr": 0,
+    "position_sell_kc_mult": 0.0,
+    "trend_buy_kc_window": 0,
+    "trend_buy_kc_atr": 0,
+    "trend_buy_kc_mult": 0.0,
+    "trend_sell_kc_window": 0,
+    "trend_sell_kc_atr": 0,
+    "trend_sell_kc_mult": 0.0,
+    "stoploss": null,
+    "trailing_stop": false,
+    "trailing_stop_positive": null,
+    "trailing_stop_positive_offset": null,
+    "trailing_only_offset_is_reached": false
+}

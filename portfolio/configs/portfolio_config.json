@@ -1,0 +1,173 @@
+{
+    "bot_settings": {
+        "dry_run": false,
+        "max_retries_network": 3,
+        "retry_delay_seconds_network": 5,
+        "cycle_sleep_duration_seconds": 300,
+        "min_order_value_usd": 30.0,
+        "max_alt_coin_ratio": 0.7,
+        "market_cap_stale_threshold_seconds": 86400,
+        "balance_adjustment_factor_buy": 0.99,
+        "balance_adjustment_factor_sell": 0.9999,
+        "initial_stablecoin_balance": 10000.0,
+        "indicator_history_size": 1000,
+        "max_indicator_history_size": 4000,
+        "rebalance_threshold_percentage": 0.05,
+        "signal_confirmation_cycles": 1
+    },
+    "paths": {
+        "log_dir": "./portfolio/logfiles/",
+        "log_filename": "trading_bot.log",
+        "portfolio_strategies_dir": "./portfolio/strategies/",
+        "global_status_file_path": "./portfolio/status/status.json",
+        "portfolio_export_path": "./portfolio/exports/portfolio_snapshot.csv",
+        "ohlcv_export_dir": "./portfolio/exports/ohlcv/"
+    },
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s.%(msecs)03d %(levelname)-8s %(name)-22s [%(filename)s:%(lineno)d] %(message)s",
+        "date_format": "%Y-%m-%d %H:%M:%S",
+        "external_lib_levels": {
+            "pycoingecko": "WARNING",
+            "urllib3": "INFO",
+            "ccxt": "INFO"
+        }
+    },
+    "exchange_configurations": {
+        "binance": {
+            "credentials_key": "binance_api",
+            "enable_rate_limit": true,
+            "default_type": "spot",
+            "options": {}
+        },
+        "okx": {
+            "credentials_key": "okx_api",
+            "enable_rate_limit": true,
+            "default_type": "spot",
+            "options": {}
+        }
+    },
+    "exchanges_credentials": {
+        "binance_api": {
+            "apiKey": "b8Zezx1UGEuKJZnKooLLuvrgstb0kotbRK4BPCOqDJxNkdHKhYYSAKMHYoCSmIQ9",
+            "secret": "ad20lcR37ob0a90YCHixQg69cy2NutFVW56elE4LbXoJnKVtNj1kUM4c1OAMDm3x"
+        },
+        "okx_api": {
+            "apiKey": "0e0e0918-50bc-441b-92dc-07ae7114dccf",
+            "secret": "09598387FCE52E1AD13DF211DCB09741",
+            "password": "Kien79911162@"
+        }
+    },
+    "telegram": {
+        "enabled": false,
+        "credentials_key": "telegram_bot"
+    },
+    "telegram_credentials": {
+        "telegram_bot": {
+            "apiKey": "6955294026:AAETkWIWi6W4sQK7u5R5GqbC6VaIldbqw0s",
+            "chatId": "5742670749"
+        }
+    },
+    "portfolio_assets": [
+        {
+            "ticker": "USDT",
+            "level": 0,
+            "exchange": "okx",
+            "coingecko_id": "tether",
+            "position_interval": 0,
+            "trend_interval": 0,
+            "strategy_file": "USDT_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "ETH",
+            "level": 1,
+            "exchange": "okx",
+            "coingecko_id": "ethereum",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "ETH_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "SOL",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "solana",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "SOL_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "ADA",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "cardano",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "ADA_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "DOT",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "polkadot",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "DOT_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "NEAR",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "near",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "SOL_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "LINK",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "chainlink",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "LINK_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "APT",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "aptos",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "APT_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "SUI",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "sui",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "SUI_strategy.json",
+            "strategy_name": "keltner_channel"
+        },
+        {
+            "ticker": "OP",
+            "level": 2,
+            "exchange": "okx",
+            "coingecko_id": "optimism",
+            "position_interval": 900,
+            "trend_interval": 14400,
+            "strategy_file": "OP_strategy.json",
+            "strategy_name": "keltner_channel"
+        }
+    ]
+}

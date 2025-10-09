@@ -1,0 +1,22 @@
+{
+  "strategy_path": "user_data/strategies",
+  "hyperopt_loss_function": "SortinoHyperOptLossDaily",
+  "timeframe": "1h",
+  "exchange": {
+    "name": "binance",
+    "pair_whitelist": []
+  },
+  "user_data_dir": "user_data",
+  "dry_run_wallet": 1000,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "max_open_trades": 10,
+  "minimal_roi": {
+    "0": 0.01,
+    "30": 0.005,
+    "60": 0.002
+  },
+  "stoploss": -0.10,
+  "trailing_stop": false,
+  "protections": []
+}

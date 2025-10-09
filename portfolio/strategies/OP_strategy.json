@@ -1,0 +1,8 @@
+{
+    "position_kc_window": 7,
+    "position_kc_atr": 32,
+    "position_kc_mult": 3.22,
+    "trend_kc_window": 13,
+    "trend_kc_atr": 6,
+    "trend_kc_mult": 2.2
+}

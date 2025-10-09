@@ -1,0 +1,27 @@
+{
+  "strategy_name": "KeltnerChannelStrategyPosition",
+  "params": {
+    "roi": {},
+    "stoploss": {
+      "stoploss": -0.1
+    },
+    "trailing": {
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 1
+    },
+    "buy": {
+      "kc_atrs": 32,
+      "kc_mult": 3.22,
+      "kc_window": 7
+    },
+    "sell": {},
+    "protection": {}
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2025-09-02 12:27:55.165710+00:00"
+}

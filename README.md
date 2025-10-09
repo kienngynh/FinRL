@@ -1,324 +1,562 @@
-<div align="center">
-<img align="center" width="30%" alt="image" src="https://github.com/AI4Finance-Foundation/FinGPT/assets/31713746/e0371951-1ce1-488e-aa25-0992dafcc139">
-</div>
-
-# FinRL®: Financial Reinforcement Learning [![twitter][1.1]][1] [![facebook][1.2]][2] [![google+][1.3]][3] [![linkedin][1.4]][4]
-
-[1.1]: http://www.tensorlet.org/wp-content/uploads/2021/01/button_twitter_22x22.png
-[1.2]: http://www.tensorlet.org/wp-content/uploads/2021/01/facebook-button_22x22.png
-[1.3]: http://www.tensorlet.org/wp-content/uploads/2021/01/button_google_22.xx_.png
-[1.4]: http://www.tensorlet.org/wp-content/uploads/2021/01/button_linkedin_22x22.png
-
-[1]: https://twitter.com/intent/tweet?text=FinRL-Financial-Deep-Reinforcement-Learning%20&url=https://github.com/AI4Finance-Foundation/FinRL&hashtags=DRL&hashtags=AI
-[2]: https://www.facebook.com/sharer.php?u=http%3A%2F%2Fgithub.com%2FAI4Finance-Foundation%2FFinRL
-[3]: https://plus.google.com/share?url=https://github.com/AI4Finance-Foundation/FinRL
-[4]: https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2Fgithub.com%2FAI4Finance-Foundation%2FFinRL
-
-<div align="center">
-<img align="center" src=figs/logo_transparent_background.png width="55%"/>
-</div>
-
-[![Downloads](https://static.pepy.tech/badge/finrl)](https://pepy.tech/project/finrl)
-[![Downloads](https://static.pepy.tech/badge/finrl/week)](https://pepy.tech/project/finrl)
-[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
-[![PyPI](https://img.shields.io/pypi/v/finrl.svg)](https://pypi.org/project/finrl/)
-[![Documentation Status](https://readthedocs.org/projects/finrl/badge/?version=latest)](https://finrl.readthedocs.io/en/latest/?badge=latest)
-![License](https://img.shields.io/github/license/AI4Finance-Foundation/finrl.svg?color=brightgreen)
-![](https://img.shields.io/github/issues-raw/AI4Finance-Foundation/finrl?label=Issues)
-![](https://img.shields.io/github/issues-closed-raw/AI4Finance-Foundation/finrl?label=Closed+Issues)
-![](https://img.shields.io/github/issues-pr-raw/AI4Finance-Foundation/finrl?label=Open+PRs)
-![](https://img.shields.io/github/issues-pr-closed-raw/AI4Finance-Foundation/finrl?label=Closed+PRs)
-
-[FinGPT](https://github.com/AI4Finance-Foundation/ChatGPT-for-FinTech): Open-source for open-finance! Revolutionize FinTech.
-
-
-[![](https://dcbadge.vercel.app/api/server/trsr8SXpW5)](https://discord.gg/trsr8SXpW5)
-
-![Visitors](https://api.visitorbadge.io/api/VisitorHit?user=AI4Finance-Foundation&repo=FinRL&countColor=%23B17A)
-
-
-
-**Financial reinforcement learning (FinRL®)** ([Document website](https://finrl.readthedocs.io/en/latest/index.html)) is **the first open-source framework** for financial reinforcement learning. FinRL has evolved into an **ecosystem**
-* [FinRL-DeepSeek](https://github.com/AI4Finance-Foundation/FinRL_DeepSeek): LLM-Infused Risk-Sensitive Reinforcement Learning for Trading Agents
-
-| Dev Roadmap  | Stage | Users | Project | Description |
-|----|----|----|----|----|
-| 0.0 (Preparation) | entrance | practitioners | [FinRL-Meta](https://github.com/AI4Finance-Foundation/FinRL-Meta)| gym-style market environments |
-| 1.0 (Proof-of-Concept)| full-stack | developers | [this repo](https://github.com/AI4Finance-Foundation/FinRL) | automatic pipeline |
-| 2.0 (Professional) | profession | experts | [ElegantRL](https://github.com/AI4Finance-Foundation/ElegantRL) | algorithms |
-| 3.0 (Production) | service | hedge funds | [Podracer](https://github.com/AI4Finance-Foundation/FinRL_Podracer) | cloud-native deployment |
-
-
-## Outline
-
-  - [Overview](#overview)
-  - [File Structure](#file-structure)
-  - [Supported Data Sources](#supported-data-sources)
-  - [Installation](#installation)
-  - [Status Update](#status-update)
-  - [Tutorials](#tutorials)
-  - [Publications](#publications)
-  - [News](#news)
-  - [Citing FinRL](#citing-finrl)
-  - [Join and Contribute](#join-and-contribute)
-    - [Contributors](#contributors)
-    - [Sponsorship](#sponsorship)
-  - [LICENSE](#license)
-
-## Overview
-
-FinRL has three layers: market environments, agents, and applications.  For a trading task (on the top), an agent (in the middle) interacts with a market environment (at the bottom), making sequential decisions.
-
-<div align="center">
-<img align="center" src=figs/finrl_framework.png>
-</div>
-
-A quick start: Stock_NeurIPS2018.ipynb. Videos [FinRL](http://www.youtube.com/watch?v=ZSGJjtM-5jA) at [AI4Finance Youtube Channel](https://www.youtube.com/channel/UCrVri6k3KPBa3NhapVV4K5g).
-
-
-## File Structure
-
-The main folder **finrl** has three subfolders **applications, agents, meta**. We employ a **train-test-trade** pipeline with three files: train.py, test.py, and trade.py.
-
-```
-FinRL
-├── finrl (main folder)
-│   ├── applications
-│   	├── Stock_NeurIPS2018
-│   	├── imitation_learning
-│   	├── cryptocurrency_trading
-│   	├── high_frequency_trading
-│   	├── portfolio_allocation
-│   	└── stock_trading
-│   ├── agents
-│   	├── elegantrl
-│   	├── rllib
-│   	└── stablebaseline3
-│   ├── meta
-│   	├── data_processors
-│   	├── env_cryptocurrency_trading
-│   	├── env_portfolio_allocation
-│   	├── env_stock_trading
-│   	├── preprocessor
-│   	├── data_processor.py
-│       ├── meta_config_tickers.py
-│   	└── meta_config.py
-│   ├── config.py
-│   ├── config_tickers.py
-│   ├── main.py
-│   ├── plot.py
-│   ├── train.py
-│   ├── test.py
-│   └── trade.py
-│
-├── examples
-├── unit_tests (unit tests to verify codes on env & data)
-│   ├── environments
-│   	└── test_env_cashpenalty.py
-│   └── downloaders
-│   	├── test_yahoodownload.py
-│   	└── test_alpaca_downloader.py
-├── setup.py
-├── requirements.txt
-└── README.md
-```
-
-## Supported Data Sources
-
-|Data Source |Type |Range and Frequency |Request Limits|Raw Data|Preprocessed Data|
-|  ----  |  ----  |  ----  |  ----  |  ----  |  ----  |
-|[Akshare](https://alpaca.markets/docs/introduction/)| CN Securities| 2015-now, 1day| Account-specific| OHLCV| Prices&Indicators|
-|[Alpaca](https://docs.alpaca.markets/docs/getting-started)| US Stocks, ETFs| 2015-now, 1min| Account-specific| OHLCV| Prices&Indicators|
-|[Baostock](http://baostock.com/baostock/index.php/Python_API%E6%96%87%E6%A1%A3)| CN Securities| 1990-12-19-now, 5min| Account-specific| OHLCV| Prices&Indicators|
-|[Binance](https://binance-docs.github.io/apidocs/spot/en/#public-api-definitions)| Cryptocurrency| API-specific, 1s, 1min| API-specific| Tick-level daily aggegrated trades, OHLCV| Prices&Indicators|
-|[CCXT](https://docs.ccxt.com/en/latest/manual.html)| Cryptocurrency| API-specific, 1min| API-specific| OHLCV| Prices&Indicators|
-|[EODhistoricaldata](https://eodhistoricaldata.com/financial-apis/)| US Securities| Frequency-specific, 1min| API-specific | OHLCV | Prices&Indicators|
-|[IEXCloud](https://iexcloud.io/docs/api/)| NMS US securities|1970-now, 1 day|100 per second per IP|OHLCV| Prices&Indicators|
-|[JoinQuant](https://www.joinquant.com/)| CN Securities| 2005-now, 1min| 3 requests each time| OHLCV| Prices&Indicators|
-|[QuantConnect](https://www.quantconnect.com/docs/v2)| US Securities| 1998-now, 1s| NA| OHLCV| Prices&Indicators|
-|[RiceQuant](https://www.ricequant.com/doc/rqdata/python/)| CN Securities| 2005-now, 1ms| Account-specific| OHLCV| Prices&Indicators|
-[Sinopac](https://sinotrade.github.io/zh_TW/tutor/prepare/terms/) | Taiwan securities | 2023-04-13~now, 1min | Account-specific | OHLCV | Prices&Indicators|
-|[Tushare](https://tushare.pro/document/1?doc_id=131)| CN Securities, A share| -now, 1 min| Account-specific| OHLCV| Prices&Indicators|
-|[WRDS](https://wrds-www.wharton.upenn.edu/pages/about/data-vendors/nyse-trade-and-quote-taq/)| US Securities| 2003-now, 1ms| 5 requests each time| Intraday Trades|Prices&Indicators|
-|[YahooFinance](https://pypi.org/project/yfinance/)| US Securities| Frequency-specific, 1min| 2,000/hour| OHLCV | Prices&Indicators|
-
-
-<!-- |Data Source |Type |Max Frequency |Raw Data|Preprocessed Data|
-|  ----  |  ----  |  ----  |  ----  |  ----  |
-|    AkShare |  CN Securities | 1 day  |  OHLCV |  Prices, indicators |
-|    Alpaca |  US Stocks, ETFs |  1 min |  OHLCV |  Prices, indicators |
-|    Alpha Vantage | Stock, ETF, forex, crypto, technical indicators | 1 min |  OHLCV  & Prices, indicators |
-|    Baostock |  CN Securities |  5 min |  OHLCV |  Prices, indicators |
-|    Binance |  Cryptocurrency |  1 s |  OHLCV |  Prices, indicators |
-|    CCXT |  Cryptocurrency |  1 min  |  OHLCV |  Prices, indicators |
-|    currencyapi |  Exchange rate | 1 day |  Exchange rate | Exchange rate, indicators |
-|    currencylayer |  Exchange rate | 1 day  |  Exchange rate | Exchange rate, indicators |
-|    EOD Historical Data | US stocks, and ETFs |  1 day  |  OHLCV  | Prices, indicators |
-|    Exchangerates |  Exchange rate |  1 day  |  Exchange rate | Exchange rate, indicators |
-|    findatapy |  CN Securities | 1 day  |  OHLCV |  Prices, indicators |
-|    Financial Modeling prep | US stocks, currencies, crypto |  1 min |  OHLCV  | Prices, indicators |
-|    finnhub | US Stocks, currencies, crypto |   1 day |  OHLCV  | Prices, indicators |
-|    Fixer |  Exchange rate |  1 day  |  Exchange rate | Exchange rate, indicators |
-|    IEXCloud |  NMS US securities | 1 day  | OHLCV |  Prices, indicators |
-|    JoinQuant |  CN Securities |  1 min  |  OHLCV |  Prices, indicators |
-|    Marketstack | 50+ countries |  1 day  |  OHLCV | Prices, indicators |
-|    Open Exchange Rates |  Exchange rate |  1 day  |  Exchange rate | Exchange rate, indicators |
-|    pandas\_datareader |  US Securities |  1 day |  OHLCV | Prices, indicators |
-|    pandas-finance |  US Securities |  1 day  |  OHLCV  & Prices, indicators |
-|    Polygon |  US Securities |  1 day  |  OHLCV  | Prices, indicators |
-|    Quandl | 250+ sources |  1 day  |  OHLCV  | Prices, indicators |
-|    QuantConnect |  US Securities |  1 s |  OHLCV |  Prices, indicators |
-|    RiceQuant |  CN Securities |  1 ms  |  OHLCV |  Prices, indicators |
-|    Sinopac   | Taiwan securities | 1min | OHLCV |  Prices, indicators |
-|    Tiingo | Stocks, crypto |  1 day  |  OHLCV  | Prices, indicators |
-|    Tushare |  CN Securities | 1 min  |  OHLCV |  Prices, indicators |
-|    WRDS |  US Securities |  1 ms  |  Intraday Trades | Prices, indicators |
-|    XE |  Exchange rate |  1 day  |  Exchange rate | Exchange rate, indicators |
-|    Xignite |  Exchange rate |  1 day  |  Exchange rate | Exchange rate, indicators |
-|    YahooFinance |  US Securities | 1 min  |  OHLCV  |  Prices, indicators |
-|    ystockquote |  US Securities |  1 day  |  OHLCV | Prices, indicators | -->
-
-
-
-OHLCV: open, high, low, and close prices; volume. adjusted_close: adjusted close price
-
-Technical indicators: 'macd', 'boll_ub', 'boll_lb', 'rsi_30', 'dx_30', 'close_30_sma', 'close_60_sma'. Users also can add new features.
-
-
-## Installation
-+ [Install description for all operating systems (MAC OS, Ubuntu, Windows 10)](./docs/source/start/installation.rst)
-+ [FinRL for Quantitative Finance: Install and Setup Tutorial for Beginners](https://ai4finance.medium.com/finrl-for-quantitative-finance-install-and-setup-tutorial-for-beginners-1db80ad39159)
-
-## Status Update
-<details><summary><b>Version History</b> <i>[click to expand]</i></summary>
-<div>
-
-* 2022-06-25
-	0.3.5: Formal release of FinRL, neo_finrl is chenged to FinRL-Meta with related files in directory: *meta*.
-* 2021-08-25
-	0.3.1: pytorch version with a three-layer architecture, apps (financial tasks), drl_agents (drl algorithms), neo_finrl (gym env)
-* 2020-12-14
-  	Upgraded to **Pytorch** with stable-baselines3; Remove tensorflow 1.0 at this moment, under development to support tensorflow 2.0
-* 2020-11-27
-  	0.1: Beta version with tensorflow 1.5
-</div>
-</details>
-
-
-## Tutorials
-
-+ [Towardsdatascience] [Deep Reinforcement Learning for Automated Stock Trading](https://towardsdatascience.com/deep-reinforcement-learning-for-automated-stock-trading-f1dad0126a02)
-
-
-## Publications
-
-|Title |Conference/Journal |Link|Citations|Year|
-|  ----  |  ----  |  ----  |  ----  |  ----  |
-|Dynamic Datasets and Market Environments for Financial Reinforcement Learning| Machine Learning - Springer Nature| [paper](https://arxiv.org/abs/2304.13174) [code](https://github.com/AI4Finance-Foundation/FinRL-Meta) | 7 | 2024 |
-|**FinRL-Meta**: FinRL-Meta: Market Environments and Benchmarks for Data-Driven Financial Reinforcement Learning| NeurIPS 2022| [paper](https://arxiv.org/abs/2211.03107) [code](https://github.com/AI4Finance-Foundation/FinRL-Meta) | 37 | 2022 |
-|**FinRL**: Deep reinforcement learning framework to automate trading in quantitative finance| ACM International Conference on AI in Finance (ICAIF) | [paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3955949) | 49 | 2021 |
-|**FinRL**: A deep reinforcement learning library for automated stock trading in quantitative finance| NeurIPS 2020 Deep RL Workshop  | [paper](https://arxiv.org/abs/2011.09607) | 87 | 2020 |
-|Deep reinforcement learning for automated stock trading: An ensemble strategy| ACM International Conference on AI in Finance (ICAIF) | [paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3690996) [code](https://github.com/AI4Finance-Foundation/FinRL-Meta/blob/master/tutorials/2-Advance/FinRL_Ensemble_StockTrading_ICAIF_2020/FinRL_Ensemble_StockTrading_ICAIF_2020.ipynb) | 154 | 2020 |
-|Practical deep reinforcement learning approach for stock trading | NeurIPS 2018 Workshop on Challenges and Opportunities for AI in Financial Services| [paper](https://arxiv.org/abs/1811.07522) [code](https://github.com/AI4Finance-Foundation/DQN-DDPG_Stock_Trading](https://github.com/AI4Finance-Foundation/FinRL/tree/master/examples))| 164 | 2018 |
-
-
-## News
-+ [央广网] [2021 IDEA大会于福田圆满落幕：群英荟萃论道AI 多项目发布亮点纷呈](http://tech.cnr.cn/techph/20211123/t20211123_525669092.shtml)
-+ [央广网] [2021 IDEA大会开启AI思想盛宴 沈向洋理事长发布六大前沿产品](https://baijiahao.baidu.com/s?id=1717101783873523790&wfr=spider&for=pc)
-+ [IDEA新闻] [2021 IDEA大会发布产品FinRL-Meta——基于数据驱动的强化学习金融风险模拟系统](https://idea.edu.cn/news/20211213143128.html)
-+ [知乎] [FinRL-Meta基于数据驱动的强化学习金融元宇宙](https://zhuanlan.zhihu.com/p/437804814)
-+ [量化投资与机器学习] [基于深度强化学习的股票交易策略框架（代码+文档)](https://www.mdeditor.tw/pl/p5Gg)
-+ [运筹OR帷幄] [领读计划NO.10 | 基于深度增强学习的量化交易机器人：从AlphaGo到FinRL的演变过程](https://zhuanlan.zhihu.com/p/353557417)
-+ [深度强化实验室] [【重磅推荐】哥大开源“FinRL”: 一个用于量化金融自动交易的深度强化学习库](https://blog.csdn.net/deeprl/article/details/114828024)
-+ [商业新知] [金融科技讲座回顾|AI4Finance: 从AlphaGo到FinRL](https://www.shangyexinzhi.com/article/4170766.html)
-+ [Kaggle] [Jane Street Market Prediction](https://www.kaggle.com/c/jane-street-market-prediction/discussion/199313)
-+ [矩池云Matpool] [在矩池云上如何运行FinRL股票交易策略框架](http://www.python88.com/topic/111918)
-+ [财智无界] [金融学会常务理事陈学彬: 深度强化学习在金融资产管理中的应用](https://www.sohu.com/a/486837028_120929319)
-+ [Neurohive] [FinRL: глубокое обучение с подкреплением для трейдинга](https://neurohive.io/ru/gotovye-prilozhenija/finrl-glubokoe-obuchenie-s-podkrepleniem-dlya-trejdinga/)
-+ [ICHI.PRO] [양적 금융을위한 FinRL: 단일 주식 거래를위한 튜토리얼](https://ichi.pro/ko/yangjeog-geum-yung-eul-wihan-finrl-dan-il-jusig-geolaeleul-wihan-tyutolieol-61395882412716)
-+ [知乎] [基于深度强化学习的金融交易策略（FinRL+Stable baselines3，以道琼斯30股票为例）](https://zhuanlan.zhihu.com/p/563238735)
-+ [知乎] [动态数据驱动的金融强化学习](https://zhuanlan.zhihu.com/p/616799055)
-+ [知乎] [FinRL的W&B化+超参数搜索和模型优化(基于Stable Baselines 3）](https://zhuanlan.zhihu.com/p/498115373)
-+ [知乎] [FinRL-Meta: 未来金融强化学习的元宇宙](https://zhuanlan.zhihu.com/p/544621882)
-+
-## Citing FinRL
-
-```
-@article{dynamic_datasets,
-    author = {Liu, Xiao-Yang and Xia, Ziyi and Yang, Hongyang and Gao, Jiechao and Zha, Daochen and Zhu, Ming and Wang, Christina Dan and Wang, Zhaoran and Guo, Jian},
-    title = {Dynamic Datasets and Market Environments for Financial Reinforcement Learning},
-    journal = {Machine Learning - Springer Nature},
-    year = {2024}
-}
-```
-
-
-```
-@article{liu2022finrl_meta,
-  title={FinRL-Meta: Market Environments and Benchmarks for Data-Driven Financial Reinforcement Learning},
-  author={Liu, Xiao-Yang and Xia, Ziyi and Rui, Jingyang and Gao, Jiechao and Yang, Hongyang and Zhu, Ming and Wang, Christina Dan and Wang, Zhaoran and Guo, Jian},
-  journal={NeurIPS},
-  year={2022}
-}
-```
-
-```
-@article{liu2021finrl,
-    author  = {Liu, Xiao-Yang and Yang, Hongyang and Gao, Jiechao and Wang, Christina Dan},
-    title   = {{FinRL}: Deep reinforcement learning framework to automate trading in quantitative finance},
-    journal = {ACM International Conference on AI in Finance (ICAIF)},
-    year    = {2021}
-}
-
-```
-
-```
-@article{finrl2020,
-    author  = {Liu, Xiao-Yang and Yang, Hongyang and Chen, Qian and Zhang, Runjia and Yang, Liuqing and Xiao, Bowen and Wang, Christina Dan},
-    title   = {{FinRL}: A deep reinforcement learning library for automated stock trading in quantitative finance},
-    journal = {Deep RL Workshop, NeurIPS 2020},
-    year    = {2020}
-}
-```
-
-```
-@article{liu2018practical,
-  title={Practical deep reinforcement learning approach for stock trading},
-  author={Liu, Xiao-Yang and Xiong, Zhuoran and Zhong, Shan and Yang, Hongyang and Walid, Anwar},
-  journal={NeurIPS Workshop on Deep Reinforcement Learning},
-  year={2018}
-}
-```
-
-We published [FinRL papers](http://tensorlet.org/projects/ai-in-finance/) that are listed at [Google Scholar](https://scholar.google.com/citations?view_op=list_works&hl=en&hl=en&user=XsdPXocAAAAJ). Previous papers are given in the [list](https://github.com/AI4Finance-Foundation/FinRL/blob/master/tutorials/FinRL_papers.md).
-
-
-## Join and Contribute
-
-Welcome to **AI4Finance** community!
-
-Please check [Contributing Guidances](https://github.com/AI4Finance-Foundation/FinRL-Tutorials/blob/master/Contributing.md).
-
-### Contributors
-
-Thank you!
-
-<a href="https://github.com/AI4Finance-LLC/FinRL-Library/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AI4Finance-LLC/FinRL-Library" />
-</a>
-
-
-## LICENSE
-
-MIT License
-```
-Trademark Disclaimer
-
-FinRL® is a registered trademark.
-This license does not grant permission to use the FinRL name, logo, or related trademarks
-without prior written consent, except as permitted by applicable trademark law.
-For trademark inquiries or permissions, please contact: contact@finrl.ai
-
-```
-
-**Disclaimer: We are sharing codes for academic purpose under the MIT education license. Nothing herein is financial advice, and NOT a recommendation to trade real money. Please use common sense and always first consult a professional before trading or investing.**
+# Prompt
+
+I understand you want to maintain the SAC-based portfolio allocation in `test.py` but integrate the Keltner Channel indicator logic from `src/trading_bot.py` and potentially use hyperoptimized parameters from the `run_hyperopt.py` process.
+
+Here is my proposed plan to achieve this:
+
+**1. Copy Keltner Channel Classes:**
+I will copy the `IndicatorMixin`, `AverageTrueRange`, and `KeltnerChannel` classes from `src/trading_bot.py` directly into `test.py`. This will make the Keltner Channel calculation logic available for use. I will also add necessary imports like `ABC` and `abstractmethod` from the `abc` module.
+
+**2. Create a Custom `FeatureEngineer` in `test.py`:**
+I will define a new `FeatureEngineer` class within `test.py` that inherits from `finrl.meta.preprocessor.preprocessors.FeatureEngineer`. This custom class will allow us to extend its functionality without modifying the FinRL library files.
+
+**3. Override `add_technical_indicator` Method:**
+Inside the custom `FeatureEngineer`, I will override the `add_technical_indicator` method. This method will:
+    * First, calculate the existing technical indicators using `stockstats` as it currently does.
+    * Then, for each unique ticker in the DataFrame, it will calculate the Keltner Channel bands (`kc_mband`, `kc_hband`, `kc_lband`), Channel Width (`kc_wband`), and Percentage Bandwidth (`kc_pband`) using the copied `KeltnerChannel` class.
+    * These new Keltner Channel features will be added as columns to the DataFrame.
+
+**4. Integrate Hyperoptimized Parameters (Optional):**
+If you have run `run_hyperopt.py` and generated strategy JSON files (e.g., `portfolio/strategies/BTC_strategy.json`), I can add logic to `test.py` to:
+    *Load these JSON files for each ticker.
+    *   Extract the optimized Keltner Channel parameters (e.g., `position_kc_window`, `position_kc_atr`, `position_kc_mult`).
+    *   Pass these optimized parameters to the `KeltnerChannel` constructor when calculating the indicators for the respective tickers. If no optimized parameters are found, default values will be used.
+
+**5. Update `tech_indicator_list`:**
+The `tech_indicator_list` attribute of the custom `FeatureEngineer` will be updated to include the new Keltner Channel indicators, ensuring they are recognized and used as features for the DRL agent.
+
+This plan ensures that the FinRL DRL agent framework remains, while enhancing its feature set with the Keltner Channel indicator and its optimized parameters.
+
+Does this plan align with your expectations? If so, please let me know, and I will ask you to switch to ACT MODE to begin the implementation.
+
+# Trading Bot Logic Documentation
+
+This document explains the core logic of the `trading_bot.py` script, covering configuration, technical indicators, portfolio management, rebalancing strategies, and trade execution.
+
+## 1. Configuration Loading and Validation
+
+The bot starts by loading its configuration from a JSON file, specified by `DEFAULT_CONFIG_FILE_PATH` (defaulting to `./portfolio/configs/portfolio_config.json`).
+
+### `load_app_config(config_path)`
+
+This function is responsible for:
+
+- Reading the JSON configuration file.
+- Validating the structure and content of the configuration using several helper functions.
+- Exiting the application if any critical configuration errors are found.
+
+### Validation Functions
+
+- `_validate_required_sections(config_data, config_path)`: Ensures all essential top-level sections (e.g., `bot_settings`, `paths`, `exchange_configurations`, `portfolio_assets`) are present.
+- `_validate_exchange_configurations(config_data)`: Checks that each defined exchange configuration has a `credentials_key` and that this key exists in the `exchanges_credentials` section.
+- `_validate_paths(config_data)`: Verifies that `portfolio_strategies_dir` and `global_status_file_path` are defined within the `paths` section.
+- `_validate_portfolio_assets(config_data)`: Ensures the `portfolio_assets` list is not empty and each asset entry contains `ticker`, `level`, `strategy_file`, and `strategy_name`. It also checks that tradable assets (level != 0) have an `exchange` key.
+
+## 2. Retry Decorator
+
+The `retry_on_network_error` decorator provides a robust mechanism to handle transient network-related errors when interacting with external APIs (exchanges, CoinGecko).
+
+### `retry_on_network_error`
+
+- **Purpose**: Automatically retries a function call if specific network-related exceptions occur.
+- **Configuration**: Uses `MAX_RETRIES_CFG` (default: 3) and `RETRY_DELAY_SECONDS_CFG` (default: 5) from `bot_settings` in the configuration.
+- **Mechanism**:
+  - It detects if the decorated function is `async` or `sync` and applies the appropriate retry logic (`_retry_logic_async` or `_retry_logic_sync`).
+  - Catches `ccxt.NetworkError`, `ccxt.RequestTimeout`, `ccxt.ExchangeNotAvailable`, `ccxt.OnMaintenance`, and `ConnectionError`.
+  - Logs warnings for each retry attempt.
+  - If all retries fail, `_handle_retry_failure` is called.
+- **`_handle_retry_failure`**:
+  - Logs an error message.
+  - Provides specific fallback behavior for `fetch_ohlcv` (returns an empty DataFrame) and `fetch_market_cap` (returns last known market cap and fetch time).
+  - Re-raises the last exception if no specific fallback is defined or if fallback data is unavailable.
+
+## 3. IndicatorMixin and Keltner Channel
+
+This section defines the base for technical indicators and implements the Keltner Channel.
+
+### `IndicatorMixin`
+
+An abstract base class providing common utility methods for technical indicators:
+
+- `_check_fillna(serie, value=0)`: Fills NaN values in a pandas Series if `_fillna` is enabled.
+- `_true_range(high, low, close)`: Calculates the True Range (TR) for OHLCV data.
+  - `TR = max(High - Low, abs(High - PreviousClose), abs(Low - PreviousClose))`
+- `_crossed_above(series1, series2)`: Returns a boolean Series indicating when `series1` crosses above `series2`.
+- `_crossed_below(series1, series2)`: Returns a boolean Series indicating when `series1` crosses below `series2`.
+
+### `AverageTrueRange`
+
+Calculates the Average True Range (ATR), a measure of market volatility.
+
+- **Initialization**: Takes `high`, `low`, `close` Series and a `window` (default: 14).
+- **Calculation (`_run`)**:
+    1. Calculates `true_range` using `_true_range`.
+    2. Computes the Exponentially Weighted Moving Average (EWMA) of the `true_range`.
+        - `ATR = EMA(True Range, window)`
+        - `alpha = 1 / window` (used in `ewm` for EMA calculation)
+
+### `KeltnerChannel`
+
+Calculates the Keltner Channel, a volatility-based envelope around a moving average.
+
+- **Initialization**: Takes `open`, `high`, `low`, `close` Series, `window` (for EMA, default: 20), `window_atr` (for ATR, default: 10), and `window_mult` (multiplier for ATR, default: 2).
+- **Calculation (`_run`)**:
+    1. **Typical Price (TP)**: `TP = (Open + High + Low + Close) / 4.0`
+    2. **Middle Band (KC_MBAND)**: `KC_MBAND = EMA(Typical Price, window)`
+    3. **Average True Range (ATR)**: Calculated using `AverageTrueRange` with `window_atr`.
+    4. **Upper Band (KC_HBAND)**: `KC_HBAND = KC_MBAND + (window_mult * ATR)`
+    5. **Lower Band (KC_LBAND)**: `KC_LBAND = KC_MBAND - (window_mult * ATR)`
+- **Additional Indicators**:
+  - `keltner_channel_wband()`: Channel Width. `KC_WBAND = ((KC_HBAND - KC_LBAND) / KC_MBAND) * 100`
+  - `keltner_channel_pband()`: Percentage Bandwidth. `KC_PBAND = (Close - KC_LBAND) / (KC_HBAND - KC_LBAND)`
+  - `keltner_channel_close_hband_indicator()`: `True` if `Close` crosses above `KC_HBAND`.
+  - `keltner_channel_high_hband_indicator()`: `True` if `High` crosses above `KC_HBAND`.
+  - `keltner_channel_close_lband_indicator()`: `True` if `Close` crosses below `KC_LBAND`.
+  - `keltner_channel_low_lband_indicator()`: `True` if `Low` crosses below `KC_LBAND`.
+
+## 4. Modular Indicator Strategy Framework
+
+This framework allows for easy integration of new trading strategies.
+
+### `IndicatorStrategy` (Abstract Base Class)
+
+Defines the interface for any trading strategy:
+
+- `get_strategy_params()`: Returns a list of parameter names used by the strategy.
+- `get_default_config(is_stablecoin)`: Returns default configuration parameters, potentially varying for stablecoins.
+- `get_param_data_types()`: Maps parameter names to their data types.
+- `prepare_signal_params(row_data, param_prefix)`: Extracts and prepares parameters from a portfolio row for signal calculation.
+- `calculate_signals(df, **params)`: Abstract method to calculate trading signals based on OHLCV data and parameters.
+
+### `KeltnerChannelStrategy`
+
+An implementation of `IndicatorStrategy` for the Keltner Channel.
+
+- **`get_strategy_params()`**: Returns parameters like `position_kc_window`, `trend_kc_mult`, etc.
+- **`get_default_config(is_stablecoin)`**: Provides default values for Keltner Channel parameters, with specific defaults for stablecoins (all zeros, effectively disabling the indicator).
+- **`get_param_data_types()`**: Defines types for its parameters (e.g., `int`, `float`).
+- **`prepare_signal_params(row_data, param_prefix)`**: Extracts `window`, `window_atr`, `window_mult` from the `row_data` using the provided `param_prefix` (e.g., "position" or "trend").
+- **`calculate_signals(self, df, **params)`**:
+    1. Initializes a `KeltnerChannel` object with the provided OHLCV `df` and parameters.
+    2. Calculates `buy_crossupper` (close crosses above upper band) and `sell_crosslower` (close crosses below lower band) indicators.
+    3. Combines these into a `position` signal:
+        - `1.0` for buy signals (`buy_crossupper`).
+        - `-1.0` for sell signals (`sell_crosslower`).
+        - `0.0` for neutral (no signal, or filled forward from previous non-neutral signal).
+        - `df["position"] = df["position"].replace(0, np.nan).ffill().fillna(0)`: This line propagates the last non-neutral signal forward, treating `0` as a placeholder for "no new signal, maintain previous".
+
+### `IndicatorFactory`
+
+A factory class to manage and retrieve `IndicatorStrategy` instances.
+
+- `_strategies`: A dictionary mapping strategy names (e.g., "keltner_channel") to their respective strategy classes.
+- `get_strategy_instance(name)`: Returns an instance of the specified strategy.
+- `get_strategy_class(name)`: Returns the class type of the specified strategy.
+- **Extensibility**: New strategies can be added by creating a new class inheriting from `IndicatorStrategy` and registering it in the `_strategies` dictionary.
+
+## 5. Helper Functions
+
+### `standardized_amount(amount_float, precision_step, min_amount_limit)`
+
+- **Purpose**: Adjusts a float amount to match exchange precision requirements and minimum limits.
+- **Logic**:
+    1. Converts `amount_float` to `Decimal` for precise calculations.
+    2. If `precision_step` is provided and non-zero, it quantizes the amount to the nearest multiple of `precision_step`.
+        - `standardized_val = (amount_decimal // quantizer) * quantizer`
+    3. Ensures the `standardized_val` is not less than `min_amount_limit`. If it is, returns `Decimal("0")`.
+
+### `send_info(path, bot_token, chat_id, logger)`
+
+- **Purpose**: Sends a file as a document to a Telegram chat.
+- **Mechanism**: Uses the `python-telegram-bot` library. Checks if the file exists before sending. Logs success or failure.
+
+## 6. TradingBot Class Initialization
+
+The `TradingBot` class encapsulates the entire bot's logic.
+
+### `__init__(self, app_config, log_file_path, logger, exchange_clients)`
+
+The constructor orchestrates the bot's setup:
+
+- Calls several `_initialize_*` methods to set up attributes, paths, external clients (Telegram, CoinGecko), and log the operating mode (dry run vs. live).
+- Initiates the `_run_initialization_sequence()`.
+
+### Initialization Methods
+
+- `_initialize_basic_attributes()`: Sets up core bot attributes from `app_config`, including `indicator_history_size`, `min_order_value_usd`, `rebalance_threshold_percentage`, `signal_confirmation_cycles`, and various balance adjustment factors. The `dry_run` setting is assumed to be `False` for live mode.
+- `_initialize_paths()`: Configures paths for strategies, global status, portfolio export, and OHLCV export, creating directories if they don't exist.
+- `_initialize_telegram()`: Sets up Telegram bot token and chat ID if enabled in config.
+- `_initialize_coingecko()`: Initializes the `CoinGeckoAPI` client.
+- `_log_initialization_mode()`: Logs that the bot is running in "LIVE TRADING" mode.
+- `_run_initialization_sequence()`:
+    1. Loads portfolio data (`_load_portfolio_data`).
+    2. Identifies the primary stablecoin (`_identify_primary_stablecoin`).
+    3. Performs initial signal checks for all active assets (`_perform_initial_signal_checks`).
+    4. Loads exchange market data (`_load_exchange_markets`).
+    5. Performs initial portfolio distribution (`_perform_initial_portfolio_distribution`).
+    6. Saves the initial portfolio status (`_save_portfolio_status`).
+
+## 7. Portfolio Data Management
+
+The bot manages its portfolio using a pandas DataFrame (`self.portfolio_df`) and JSON files for persistence.
+
+### `_load_portfolio_data()`
+
+- Loads asset configurations from `app_config["portfolio_assets"]`.
+- Loads global status data from `self.global_status_file_path`.
+- For each asset:
+  - Loads static data from `asset_config`.
+  - Loads strategy-specific parameters from a JSON file in `portfolio_strategies_dir`. If not found, it creates a default strategy config and saves it.
+  - Loads asset-specific status data from `global_status_data`. If not found, it creates default status data using `_get_default_status_data`.
+- Combines all data into `self.portfolio_df`.
+- Ensures all `CORE_STATIC_COLUMNS`, `CORE_STATUS_COLUMNS`, and strategy-specific columns are present and applies correct data types using `_apply_column_dtype`.
+
+### `_get_default_status_data(ticker, level)`
+
+- Provides a dictionary of default status values for a new asset.
+- For stablecoins (level 0), it sets `price` to 1.0, `free` and `value_in_stable` to `initial_stablecoin_balance`, and `ratio` and `target_value` to 1.0 and `initial_stablecoin_balance` respectively.
+
+### `_save_portfolio_status()`
+
+- Iterates through `self.portfolio_df` and extracts data for `STATUS_COLUMNS` for each asset.
+- Saves this aggregated status data to `self.global_status_file_path` as a JSON file.
+- Includes a `convert_numpy_types` helper to ensure pandas/numpy data types are correctly serialized to JSON.
+
+### `_load_json_file(file_path, is_global_status=False)` and `_save_json_file(file_path, data)`
+
+- Utility functions for reading and writing JSON files, with error handling and directory creation.
+- `_save_json_file` includes a check to prevent saving to a directory instead of a file.
+
+## 8. OHLCV and Market Cap Fetching
+
+The bot retrieves market data from exchanges and CoinGecko.
+
+### `_get_ccxt_timeframe(interval_seconds)`
+
+- Maps a given interval in seconds to a CCXT-compatible timeframe string (e.g., 3600s -> "1h").
+
+### `_fetch_ohlcv_ccxt(client, symbol_pair, timeframe, n_bars)`
+
+- **Purpose**: Fetches historical Open, High, Low, Close, Volume (OHLCV) data for a given symbol pair and timeframe from an exchange.
+- **Caching**: Uses `self.cycle_ohlcv_cache` to store OHLCV data for the current cycle, avoiding redundant API calls.
+- **Pagination**: Handles fetching more bars than an exchange's `fetchOHLCVLimit` by making multiple requests, adjusting the `since` parameter.
+- **Data Processing**: Converts raw OHLCV data into a pandas DataFrame, sets `datetime` as index, converts columns to numeric types, and handles duplicates/NaT values.
+- **Retry**: Decorated with `@retry_on_network_error`.
+
+### `_fetch_market_cap(coin_gecko_id, ticker, current_row_data)`
+
+- **Purpose**: Fetches the current market capitalization for an asset using CoinGecko.
+- **Fallback**: If CoinGecko fails or returns no data, it attempts to use the `last_market_cap` and `last_market_cap_fetch_time` from `current_row_data` if it's not stale (within `market_cap_stale_threshold_seconds`).
+- **Retry**: Decorated with `@retry_on_network_error`.
+
+## 9. Signal Calculation Logic
+
+The bot calculates "position" and "trend" signals for each asset based on configured indicators.
+
+### `_check_position(user_dataframe, row_idx)`
+
+- **Purpose**: Calculates the short-term "position" signal for a specific asset.
+- **Process**:
+    1. Retrieves asset details (ticker, exchange, strategy name, position interval).
+    2. Fetches OHLCV data using `_fetch_ohlcv_ccxt` for the asset's `position_interval`. It iteratively fetches more bars (up to `max_indicator_history_size`) until a non-neutral signal is found or history limit is reached.
+    3. Uses `IndicatorFactory` to get the appropriate strategy instance and calculates signals using `calculate_signals`.
+    4. Updates the asset's `price`, `position_signal_prev_1`, `position_signal_prev_2` in `portfolio_df`.
+    5. Exports OHLCV data to CSV if `ohlcv_export_dir` is configured.
+    6. Updates `position_last_check_bucket` to track when the last check occurred.
+    7. Calls `_validate_trend_position_signals` for consistency.
+
+### `_check_trend(user_dataframe, row_idx)`
+
+- **Purpose**: Calculates the long-term "trend" signal for a specific asset, primarily based on market cap dominance.
+- **Process**:
+    1. Calls `_check_trend_price_component` to calculate trend signals based on historical dominance.
+    2. Calls `_check_trend_market_cap` to update the asset's market cap from CoinGecko.
+    3. Updates `trend_last_check_bucket`.
+    4. Calls `_validate_trend_position_signals` for consistency.
+
+### `_calculate_historical_dominance_ohlcv(target_ticker, timeframe, n_bars)`
+
+- **Purpose**: Generates synthetic OHLCV data representing an asset's market cap dominanc>e over the portfolio.
+- **Formulas**:
+    1. **Fetch all OHLCV**: Fetches historical price OHLCV for all tradable assets in the portfolio.
+    2. **Estimate Historical Market Cap**: For each asset, estimates historical market cap based on its current market cap and historical price changes.
+        - `MC_hist = (last_market_cap / current_price) * price_hist`
+    3. **Calculate Total Historical Market Cap**: Sums the estimated historical market caps of all assets for each OHLCV candle.
+    4. **Calculate Dominance OHLCV**:
+        - `Dominance_Open = (Target_Asset_MC_Open / Total_MC_Open) * 100`
+        - Similar formulas for `High`, `Low`, `Close`.
+    5. Adds volume from the target asset's original price chart.
+
+### `_check_trend_price_component(...)`
+
+- **Purpose**: Uses the dominance OHLCV data to calculate the trend signal.
+- **Process**: Similar to `_check_position`, but uses `_calculate_historical_dominance_ohlcv` to get the OHLCV data and then applies the configured strategy (e.g., Keltner Channel) to this dominance data.
+- Updates `trend_signal_prev_1` and `trend_signal_prev_2`.
+
+### `_validate_trend_position_signals(portfolio_df, row_idx)`
+
+- **Purpose**: Ensures consistency between position and trend signals.
+- **Logic**: If either `position_signal_prev_1` or `trend_signal_prev_1` is `0` (neutral), both are conservatively set to `-1.0` (interpreted as a sell/avoid signal). This prevents the bot from taking a position if one of the signals is ambiguous or missing.
+
+## 10. Portfolio Rebalancing Logic and Formulas
+
+The core rebalancing logic is encapsulated in `_distribute_portfolio`.
+
+### `_distribute_portfolio()`
+
+- Orchestrates the entire rebalancing process:
+    1. `_is_distribution_possible()`: Performs sanity checks (non-empty portfolio, active clients, stablecoin identified, markets loaded).
+    2. `_initialize_balances()`: Fetches current balances from exchanges (live mode) or uses `initial_stablecoin_balance` (dry run).
+    3. `_update_stablecoin_total_in_df()`: Updates the stablecoin's balance in `portfolio_df`.
+    4. `_update_asset_prices()`: Fetches live prices for all assets.
+    5. `_calculate_total_portfolio_value()`: Calculates the total portfolio value in stablecoin.
+    6. `_calculate_allocation_targets()`: Determines the target allocation for each asset.
+    7. `_generate_optimized_trade_proposals()`: Creates a list of trades needed to reach targets.
+    8. `_execute_trade_proposals()`: Executes the generated trades.
+    9. `_finalize_portfolio_state()`: Refreshes balances and recalculates values after trades.
+
+### `_initialize_balances()`
+
+- Iterates through `exchange_clients`, fetches `fetch_balance()`, and updates `free` and `used` balances for all assets on that exchange in `portfolio_df`. It also aggregates the total free stablecoin balance across all exchanges.
+
+### `_update_asset_prices()`
+
+- Iterates through non-stablecoin assets.
+- If an asset's `price` is missing or zero, it fetches the latest ticker price from the respective exchange using `client.fetch_ticker()` and updates `portfolio_df`.
+
+### `_calculate_total_portfolio_value()`
+
+- **Formula**: `value_in_stable = free_balance * current_price`
+- Calculates `value_in_stable` for each asset and sums them to get `total_portfolio_value`.
+- If `total_portfolio_value` is effectively zero, it sets all `ratio`, `target_value`, `change` to zero (except stablecoin ratio to 1.0) and returns `None`.
+
+### `_calculate_allocation_targets(total_portfolio_value)`
+
+This is the core rebalancing logic, determining how the portfolio should be distributed.
+
+- **Dominance Calculation**:
+  - `tradable_assets = all assets with level != 0`
+  - `total_mc = sum of last_market_cap for tradable_assets`
+  - `dominance = last_market_cap / total_mc` (for tradable assets)
+  - Stablecoin dominance is set to 0.0.
+- **Two-Tiered Signal Strategy**:
+    1. **Trend Filter**: Only assets with a positive long-term `trend_signal_prev_1 == 1` are considered for allocation.
+    2. **Ratio Allocation**: For trending assets, their `ratio` (strategic allocation slot) is calculated based on their dominance relative to the sum of all trending assets' dominances:
+        - `ratio_trending_asset = trending_asset_dominance / sum_of_trending_dominances`
+    3. **Position Filter**: For each trending asset, if its short-term `position_signal_prev_1 != 1` (i.e., not a buy signal), its calculated `ratio` is moved to the primary stablecoin.
+    4. **No Trending Assets Fallback**: If no assets are trending, 100% of the portfolio `ratio` is allocated to the primary stablecoin.
+- **Altcoin Cap**: If `max_alt_coin_ratio` is set (less than 1.0):
+  - It checks if the sum of `ratio` for altcoins (level >= 2) exceeds `max_alt_coin_ratio`.
+  - If it does, altcoin ratios are scaled down proportionally, and the excess `ratio` is transferred to the stablecoin.
+- **Ratio Normalization**: All `ratio` values are normalized to ensure their sum is exactly 1.0, correcting for floating-point inaccuracies.
+- **Target Value Calculation**:
+  - `target_value = ratio * total_portfolio_value`
+- **Change Calculation**:
+  - `change = target_value - value_in_stable` (positive for buy, negative for sell)
+- **Rebalance Threshold**: Trades are skipped if the absolute `change` relative to `target_value` is below `rebalance_threshold_percentage`.
+  - `abs(change) / target_value < rebalance_threshold_percentage`
+
+## 11. Trade Execution
+
+The bot generates and executes trade proposals to adjust the portfolio according to the calculated targets.
+
+### `_generate_optimized_trade_proposals()`
+
+- **Purpose**: Creates a list of trade proposals (buy/sell orders) to bring the portfolio closer to its target allocation.
+- **Filtering**:
+  - `buys_df`: Assets with `change > min_order_value_usd` AND `position_signal_prev_1 == 1` AND `trend_signal_prev_1 == 1`.
+  - `sells_df`: Assets with `change < -min_order_value_usd` OR (`position_signal_prev_1 == -1` AND `value_in_stable > min_order_value_usd`). For full sells (position signal -1), `change` is set to `-value_in_stable`.
+- **Direct Pair Matching Logic**:
+  - Attempts to find direct asset-to-asset trades (e.g., BTC/ETH) on the same exchange, excluding stablecoin pairs.
+  - If `buy_ticker/sell_ticker` or `sell_ticker/buy_ticker` market exists, a direct trade proposal is created.
+  - `trade_value = min(abs(sell_row["change"]), buy_row["change"])`
+  - `price = buy_row["price"] / sell_row["price"]` (for buy `buy_ticker/sell_ticker`) or `sell_row["price"] / buy_row["price"]` (for sell `sell_ticker/buy_ticker`)
+  - `trade_amount = trade_value / base_currency_price_in_stable`
+  - Updates `change` in `buys_df` and `sells_df` to reflect the matched trade.
+- **Stablecoin Fallback Logic**:
+  - For any remaining `buys_df` or `sells_df` entries, it generates trade proposals against the `primary_stable_coin_ticker` (e.g., BTC/USDT).
+  - `amount_coin = value_stable / current_price`
+  - Includes a safety check for sell orders to ensure `amount_coin` does not exceed available `free` balance, adjusting if necessary.
+
+### `_execute_trade_proposals(trade_proposals)`
+
+- Sorts trade proposals: direct trades first, then stablecoin sells, then stablecoin buys. This prioritizes reducing exposure and direct conversions.
+- Iterates through sorted proposals and calls `_execute_single_trade` for each.
+- Adds a small `time.sleep(1)` between live trades to avoid rate limits.
+
+### `_execute_single_trade(proposal)`
+
+- **Pre-checks**:
+  - Ensures a CCXT client is available for the exchange.
+  - Validates `price` and `amount` as `Decimal` values.
+  - Checks if the `current_trade_value_usd` is above `min_order_value_usd` (bot's minimum) and `min_cost` (exchange's minimum).
+- **Execution**:
+  - Calls `standardized_amount` to ensure the amount adheres to exchange precision and limits.
+  - Executes a market order using `client.create_market_order()`.
+- **Post-trade Update**: Calls `_update_portfolio_post_trade` with the order result and original proposal.
+- **Error Handling**: Catches `ccxt.InsufficientFunds`, `ccxt.InvalidOrder`, `ccxt.NetworkError`, `ccxt.ExchangeError`, and other exceptions during order execution.
+
+### `_adjust_amount_for_balance(...)` (Currently not directly used in `_execute_single_trade` but available)
+
+- **Purpose**: Fetches fresh balances and ticker prices to dynamically adjust trade amounts if available funds are insufficient.
+- **Logic**:
+  - For buys: If `required_quote > available_quote`, adjusts `amount = (available_quote / live_price) * balance_adjustment_factor_buy`.
+  - For sells: If `amount > available_base`, adjusts `amount = available_base * balance_adjustment_factor_sell`.
+  - Re-standardizes the adjusted amount.
+
+### `_update_portfolio_post_trade(order_result, proposal)`
+
+- **Purpose**: Updates `portfolio_df` and internal balance estimates after a trade.
+- If `order_result` is incomplete, it skips local updates, relying on a full balance fetch later.
+
+### `_finalize_portfolio_state()`
+
+- Re-fetches all balances from exchanges to get the true, post-trade state. Updates `portfolio_df` and `self.stablecoin_balance_by_exchange`.
+- Recalculates `value_in_stable` for all assets based on the final balances.
+
+## 12. Main Execution Loop
+
+The `if __name__ == "__main__":` block sets up logging, initializes exchange clients, and runs the main bot loop.
+
+### Initialization Block
+
+- **Logging Setup**: Configures logging to both a file (`trading_bot.log`) and console, with configurable log levels and formats. Sets specific log levels for external libraries (pycoingecko, urllib3, ccxt).
+- **CCXT Client Initialization**:
+  - Iterates through `portfolio_assets` to identify unique exchange IDs.
+  - For each unique exchange, it retrieves configuration and credentials from `app_config`.
+  - Initializes the appropriate `ccxt` client (e.g., `ccxt.binance`, `ccxt.bybit`) with API keys, secret, and other options (rate limiting, default type, password).
+  - Logs initialization status, including warnings for testnet configurations or failed client setups.
+- **TradingBot Instance Creation**: Creates an instance of `TradingBot` with the loaded configuration, log paths, and initialized CCXT clients.
+
+### `run_cycle()`
+
+- This method represents a single operational cycle of the bot.
+- **Cycle Start**: Logs the start time and clears the `cycle_ohlcv_cache`.
+- **Portfolio Data Load**: Reloads portfolio data (`_load_portfolio_data`) to ensure it's up-to-date. Handles critical errors by skipping the cycle.
+- **Cycle Initialization**: Calls `_initialize_cycle()` to identify the primary stablecoin and load exchange markets for the current cycle.
+- **Action Trigger Logic**:
+    1. **Balance Change Check**: Fetches `current_total_stablecoin_balance`. If `self.last_total_stablecoin_balance` is `None` (first run) or if the absolute difference between current and last balance exceeds `min_order_value_usd`, `balance_changed` is set to `True`.
+    2. **Signal Update Check**: Calls `_update_signals_on_interval()` to check if any asset's position or trend signals need recalculation based on their configured intervals.
+  - If `action_needed_overall` (from signal changes) or `balance_changed` is `True`, the bot proceeds with portfolio distribution.
+- **Portfolio Distribution**: If conditions are met and clients/markets are ready, it calls `_distribute_portfolio()`, sets the `done` flag for tradable assets, and saves the portfolio status. It then updates `self.last_total_stablecoin_balance`.
+- **Export Data**: Exports the current `portfolio_df` to a CSV file if `portfolio_export_path` is configured.
+- **Telegram Notifications**: If Telegram is configured, it sends the log file and global status file to the specified chat.
+- **Cycle End**: Logs the cycle completion time.
+
+### `_initialize_cycle()`
+
+- Identifies the `primary_stable_coin_ticker`.
+- Reloads `markets_by_exchange` and `active_clients_for_cycle` by fetching markets for all configured exchanges. This ensures fresh market data and active client instances for the current cycle.
+
+### `_update_signals_on_interval()`
+
+- Iterates through all tradable assets in `portfolio_df`.
+- For each asset, it calls `_check_and_update_asset_signals()` to determine if its position or trend signal needs updating based on time intervals.
+- Returns `True` if any signals were updated, along with a list of reasons.
+
+### `_check_and_update_asset_signals(idx, utcnow_timestamp)`
+
+- Checks if the current timestamp has crossed a new "bucket" for either the `position_interval` or `trend_interval` compared to `position_last_check_bucket` or `trend_last_check_bucket`.
+- If a new bucket is detected, it calls `_check_position()` or `_check_trend()` respectively to recalculate the signals.
+- Returns `True` if any signal was updated.
+
+### Main Loop (`while True`)
+
+- Continuously calls `trading_bot_instance.run_cycle()`.
+- Sleeps for `cycle_sleep_seconds` (default: 60) between cycles.
+- Includes robust error handling for `KeyboardInterrupt` (graceful exit) and other `Exception` types (logs critical error, attempts to recover by sleeping and retrying).
+- Sends log and status files to Telegram on exit or critical error.
+
+# Hyperoptimization Process for Strategy Parameters
+
+This document explains the methodology used to find the optimal parameters for the trading strategies employed by `trading_bot.py`. The process uses the powerful hyperoptimization features of the **Freqtrade** framework, automated by the `run_hyperopt.py` script.
+
+The goal is to find a set of parameters for the Keltner Channel indicator that is specifically tuned for two different purposes:
+
+1. **Position Signal**: A short-term signal based on the asset's price action.
+2. **Trend Signal**: A long-term signal based on the asset's market cap dominance relative to other assets in the portfolio.
+
+## 1. Overview of the Automated Hyperoptimization Process
+
+The `run_hyperopt.py` script serves as the master controller for the entire optimization process. For each tradable asset defined in `portfolio_config.json`, it performs the following steps:
+
+1. **Isolate Optimization**: It runs two completely separate hyperoptimization tasks for each asset:
+    - One for the `KeltnerChannelStrategyPosition` strategy on its specified `position_interval` timeframe.
+    - One for the `KeltnerChannelStrategyTrend` strategy on its specified `trend_interval` timeframe.
+2. **Dynamic Configuration**: It creates temporary Freqtrade configuration files for each task to ensure that the correct strategy, pair, and timeframe are used, preventing conflicts between concurrent processes.
+3. **Data Download**: It ensures the historical market data (OHLCV) required for the backtest is downloaded and validated.
+4. **Execute Freqtrade**: It calls the `freqtrade hyperopt` command-line interface to run the optimization. Freqtrade then uses the specified strategy and loss function to test thousands of parameter combinations over the historical data.
+5. **Result Extraction**: After Freqtrade completes, the script extracts the best-performing parameters from the strategy's JSON output file.
+6. **Combine and Save**: The optimal parameters from both the "position" and "trend" runs are combined into a single strategy file (e.g., `BTC_strategy.json`) in the `portfolio/strategies/` directory. This file is then read by the main `trading_bot.py` during live operations.
+
+## 2. The Trading Strategies Explained
+
+Two distinct Freqtrade strategies are used to find the parameters for the two signals.
+
+### 2.1 `KeltnerChannelStrategyPosition.py` (Position Signal)
+
+This strategy is straightforward and focuses on pure price action to generate short-term entry and exit signals.
+
+- **Purpose**: To identify potential entry/exit points when the price breaks out of a volatility-based channel.
+- **Signal Logic**:
+  - **Buy Signal (`enter_long`)**: A buy signal is generated when the asset's closing price crosses *above* the upper band of the Keltner Channel.
+  - **Sell Signal (`exit_long`)**: A sell signal is generated when the asset's closing price crosses *below* the lower band of the Keltner Channel.
+- **Optimizable Parameters**: Freqtrade will test different combinations of the following parameters to find the most profitable setup:
+  - `kc_window`: The lookback period for the Exponential Moving Average (EMA) that forms the middle line of the channel.
+  - `kc_mult`: The multiplier for the Average True Range (ATR) that determines how wide the channel is.
+  - `kc_atrs`: The lookback period for the ATR calculation, which measures volatility.
+
+### 2.2 `KeltnerChannelStrategyTrend.py` (Trend Signal)
+
+This strategy is more complex as its goal is to replicate the "market cap dominance" logic from `trading_bot.py` within the Freqtrade backtesting environment.
+
+- **Purpose**: To determine the long-term trend of an asset not by its price, but by its strength relative to the entire defined portfolio. A rising dominance suggests the asset is outperforming its peers.
+- **Dominance Calculation Logic**:
+    1. **Load Portfolio Context**: The strategy first loads `portfolio_config.json` and the global status file to get the list of all tradable assets and their last known market caps.
+    2. **Fetch All Price Data**: Using Freqtrade's `DataProvider`, it fetches the historical OHLCV data for *every tradable asset* in the portfolio for the specified timeframe.
+    3. **Estimate Historical Market Cap**: For each asset, it calculates an estimated historical market cap time series. The formula used is:
+        `Historical MC = (Last Known MC / Last Known Price) * Historical Price Series`
+    4. **Calculate Total Portfolio MC**: It sums the estimated historical market caps of all assets at each candle to create a time series of the total portfolio market cap.
+    5. **Generate Dominance OHLCV**: It creates a new, synthetic OHLCV dataframe where the "price" (open, high, low, close) is the target asset's dominance percentage. The formula is:
+        `Dominance "Close" = (Target Asset's Historical MC "Close" / Total Portfolio MC "Close") * 100`
+- **Signal Logic**:
+  - The strategy applies the exact same Keltner Channel logic as the Position strategy, but it uses the **synthetic dominance OHLCV data** instead of the actual price data.
+  - **Buy Signal (`enter_long`)**: Generated when the asset's *dominance* crosses above the upper Keltner Channel band. This indicates the asset is becoming significantly stronger relative to its peers.
+  - **Sell Signal (`exit_long`)**: Generated when the asset's *dominance* crosses below the lower Keltner Channel band. This indicates the asset is becoming significantly weaker.
+- **Optimizable Parameters**: The same parameters (`kc_window`, `kc_mult`, `kc_atrs`) are optimized, but their optimal values will be different because they are being applied to the dominance data, which has a different scale and volatility profile than price data.
+
+## 3. The Hyperopt Loss Function (`SortinoHyperOptLossDaily.py`)
+
+The loss function is the most critical piece of the hyperoptimization puzzle. It evaluates the backtest result of each parameter combination and returns a single numerical "score" (the "loss"). Freqtrade's goal is to **minimize this score**. Our custom loss function, `SortinoHyperOptLossDaily`, is designed to find a strategy that is not just profitable, but also frequent and safe.
+
+It balances three competing objectives:
+
+### Objective 1: Maximize Performance (Sortino Ratio)
+
+- **What it is**: The Sortino Ratio is a modification of the popular Sharpe Ratio. While the Sharpe Ratio penalizes all volatility (both up and down), the Sortino Ratio only penalizes **downside volatility**. This is superior for evaluating trading strategies, because upward price swings (upside volatility) are desirable.
+- **How it works**: It measures the risk-adjusted return of the strategy, giving a higher score to strategies that produce high returns with low downside risk.
+
+### Objective 2: Ensure Sufficient Frequency (Trade Count Penalty)
+
+- **The Problem**: A backtest might show incredible profits from just one or two lucky trades over many years. This is not a statistically reliable or practical strategy. We need a strategy that trades frequently enough to be dependable.
+- **How it works**:
+    1. A baseline is set: `BASELINE_TRADES_PER_YEAR` (e.g., 365 trades) for a `BASELINE_TIMEFRAME` (e.g., '15m').
+    2. This baseline is automatically scaled to the timeframe being tested. For example, a '4h' strategy is expected to trade far less frequently than a '15m' one. The scaling factor corrects for this.
+    3. A `trade_penalty` is calculated: `penalty = actual_trades / target_trades`. If the strategy produces fewer trades than the scaled target, this penalty will be a fraction less than 1.0.
+
+### Objective 3: Minimize Risk (Maximum Drawdown Penalty)
+
+- **What it is**: The Maximum Drawdown is the largest percentage drop from a portfolio's peak value to its subsequent lowest point. It answers the question: "What is the most money I could have lost if I invested at the worst possible time?"
+- **How it works**:
+    1. The maximum relative drawdown is calculated from the backtest results (e.g., 0.25 for a 25% drawdown).
+    2. A `drawdown_penalty` is calculated using the formula: `penalty = (1 - relative_drawdown) ** DRAWDOWN_PENALTY_WEIGHT`.
+    3. This formula heavily penalizes high drawdowns. A 25% drawdown results in a penalty factor of 0.75, while a 50% drawdown results in a factor of 0.5, significantly reducing the final score.
+
+### Final Loss Calculation
+
+The three components are combined into a single score that Freqtrade will minimize.
+
+**`Loss Score = -Sortino Ratio * Trade Penalty * Drawdown Penalty`**
+
+- The Sortino Ratio is multiplied by the two penalty factors. If either the trade count is too low or the drawdown is too high, the penalties will be less than 1.0, reducing the overall score.
+- The entire result is negated (`-`). This is because hyperopt works to **minimize** the loss value. By making our desired outcome a large positive number and then negating it, we align our goal of *maximization* with Freqtrade's goal of *minimization*. The best-performing parameter set will be the one that produces the lowest (most negative) loss score.
